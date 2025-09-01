@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тестовая страница WMS</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="container">
+  <!-- Левая секция -->
+  <div class="section left">
+    <h2>ℹ️ Информация</h2>
+    <div id="info">Здесь будет информация объекта...</div>
+    <button id="showJsonBtn" class="btn-json" style="display:none;">Показать JSON</button>
+  </div>
+
+  <!-- Центр -->
+  <div class="section center">
+    <h2>Кадастровый номер</h2>
+    <input type="text" id="cadastralInput" placeholder="Введите кадастровый номер">
+
+    <div class="slider-container">
+      <label for="radiusSlider">Радиус: <span id="radiusValue">500</span> м</label>
+      <input type="range" id="radiusSlider" min="50" max="1000" value="500">
+    </div>
+
+    <div class="size-buttons">
+      <label><input type="radio" name="imgSize" value="240"> 240x240</label>
+      <label><input type="radio" name="imgSize" value="520" checked> 520x520</label>
+      <label><input type="radio" name="imgSize" value="840"> 840x840</label>
+      <label><input type="radio" name="imgSize" value="1000"> 1000x1000</label>
+    </div>
+
+    <button class="btn-fetch" id="fetchBtn">Получить схему</button>
+
+    <!-- Контейнер для изображения -->
+    <div id="wmsResult" style="margin-top:20px; text-align:center;"></div>
+  </div>
+
+  <!-- Правая секция -->
+  <div class="section right">
+    <h2>⚙️ Настройки</h2>
+
+    <!-- Первый блок: Слои -->
+    <div class="settings-block">
+      <h3>Слои</h3>
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="highlightObject" checked> Выделить объект</label>
+        <label><input type="checkbox" id="zones"> ЗОУИТЫ</label>
+        <label><input type="checkbox" id="mapLayer"> Карта</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно -->
+<div id="jsonModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <pre id="jsonViewer"></pre>
+  </div>
+</div>
+
+<!-- Подключение логики -->
+<script type="module" src="assets/main.js"></script>
+</body>
+</html>
