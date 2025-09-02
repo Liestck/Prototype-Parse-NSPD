@@ -20,8 +20,8 @@ app.use("/cache", express.static(cacheDir));
 // ======================================
 // Загрузка кадастровой сетки
 // ======================================
-app.post("/wms/kad_grid", async (req, res) => {
-    const { wmsUrl, filename, cadastralNumber } = req.body;
+app.post("/wms/get_layer", async (req, res) => {
+    const { wmsUrl, filename, cadastralNumber, layer } = req.body;
 
     if (!wmsUrl || !filename || !cadastralNumber) {
         return res.json({ message: "Не хватает данных для сохранения" });
@@ -44,7 +44,7 @@ app.post("/wms/kad_grid", async (req, res) => {
         const response = await fetch(wmsUrl, {
             method: "GET",
             headers: {
-                "Referer": "https://nspd.gov.ru/map?thematic=PKK&zoom=17.194654682049404&coordinate_x=4422317.082201003&coordinate_y=5957149.848713932&baseLayerId=235&theme_id=1&is_copy_url=true&active_layers=37578%2C37577%2C36048"
+                "Referer": `https://nspd.gov.ru/map?thematic=PKK&zoom=17.194654682049404&coordinate_x=4422317.082201003&coordinate_y=5957149.848713932&baseLayerId=235&theme_id=1&is_copy_url=true&active_layers=37578%2C37577%2C${layer}`
             },
             agent
         });

@@ -1,7 +1,7 @@
 import { Parse } from "../core/parse_methods.js";
 import { JsonPretty } from "./jsonPretty.js";
 import { ObjectInfo } from "./objectInfo.js";
-import { ObjectBorders } from "./objectBorders.js";
+import { LayeredCanvas } from "./layeredCanvas.js";
 import { WMS } from "./WMS.js";
 
 // =======================
@@ -22,7 +22,7 @@ const jsonModal = new JsonPretty("jsonModal", "jsonViewer", ".close-btn");
 // =======================
 const objectInfo = new ObjectInfo("info", "showJsonBtn", jsonModal);
 const wms = new WMS("wmsResult");
-const borders = new ObjectBorders("wmsResult");
+const layeredCanvas = new LayeredCanvas("wmsResult");
 
 // =======================
 // Обновление текста при движении ползунка
@@ -71,28 +71,41 @@ fetchBtn.addEventListener("click", async () => {
     objectInfo.render(data);
 
     // ---- 3.3 Отображение WMS схемы ----
-    const wmsData = await wms.render(cadastralNumber, radius, size);
+    const layerCheckboxMap = {
+      36048: null, // активный всегда, чекбокса нет
+      36049: "structures",
+      // остальные слои
+      36050: "mapLayer",
+      36051: "energyTransport",
+      36052: "culturalHeritage",
+      36053: "natureAreas",
+      36054: "protectedObjects",
+      36055: "otherZones",
+    };
+
+    const layers = [36048, 36049]
+    const wmsData = await wms.render(cadastralNumber, radius, size, layers);
 
     // ---- 3.4 Выделение объекта ----
     const coordinates = data.data.features[0].geometry.coordinates[0];
     if (wmsData) {
       // Инициализируем canvas поверх WMS
-      borders.initCanvas(wmsData.imagePath, wmsData.size);
-      borders.setData(coordinates, wmsData.bbox);
+      layeredCanvas.initCanvas(wmsData.imagePath, wmsData.size);
+      layeredCanvas.setData(coordinates, wmsData.bbox);
 
       const highlightCheckbox = document.getElementById("highlightObject");
 
       // Показываем контур только если галочка включена
       if (highlightCheckbox.checked) {
-        borders.fadeIn();
+        layeredCanvas.fadeIn();
       } else {
-        borders.clear(); // скрываем, если галочка выключена
+        layeredCanvas.clear(); // скрываем, если галочка выключена
       }
 
       // Подписка на динамическое переключение галочки
       highlightCheckbox.addEventListener("change", () => {
-        if (highlightCheckbox.checked) borders.fadeIn();
-        else borders.fadeOut();
+        if (highlightCheckbox.checked) layeredCanvas.fadeIn();
+        else layeredCanvas.fadeOut();
       });
     }
   } catch (error) {

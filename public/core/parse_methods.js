@@ -25,16 +25,18 @@ export class Parse {
      * Получаем ссылку на WMS-схему по кадастровому номеру и радиусу
      * @param {string} cadastralNumber - кадастровый номер
      * @param {number} radius - радиус вокруг центра bbox (метры)
+     * @param {number} size - размер изображения (пиксели)
+     * @param {number} layer - индефикатор запрашиваемого слоя
      * @returns {Promise<string>} - URL изображения WMS
      */
-    static async fetchWMS(cadastralNumber, radius = 1000, size = 512) {
+    static async fetchWMS(cadastralNumber, radius = 1000, size = 512, layer) {
         try {
             const data = await this.fetchCadastralData(cadastralNumber);
             const polygonCoords = data.data.features[0].geometry.coordinates[0];
             const bbox = BBox.getPoints(polygonCoords);
             const bboxString = BBox.getPointsOffset(bbox.center, radius);
 
-            const wmsUrl = `https://nspd.gov.ru/api/aeggis/v3/36048/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&FORMAT=image/png&STYLES=&TRANSPARENT=true&LAYERS=36048&RANDOM=${Math.random()}&WIDTH=${size}&HEIGHT=${size}&CRS=EPSG:3857&BBOX=${bboxString}`;
+            const wmsUrl = `https://nspd.gov.ru/api/aeggis/v3/${layer}/wms?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&FORMAT=image/png&STYLES=&TRANSPARENT=true&LAYERS=${layer}&RANDOM=${Math.random()}&WIDTH=${size}&HEIGHT=${size}&CRS=EPSG:3857&BBOX=${bboxString}`;
 
             return wmsUrl;  
         } catch (error) {
