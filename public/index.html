@@ -34,7 +34,11 @@
       <label><input type="radio" name="imgSize" value="1000"> 1000x1000</label>
     </div>
 
-    <button class="btn-fetch" id="fetchBtn">Получить схему</button>
+    <button class="btn-fetch" id="fetchBtn">
+      <span class="btn-loader" style="display:none;"></span>
+      <span class="btn-text">Получить схему</span>
+      
+    </button>
 
     <!-- Контейнер для изображения -->
     <div id="wmsResult" style="margin-top:20px; text-align:center;"></div>
@@ -44,17 +48,30 @@
   <div class="section right">
     <h2>⚙️ Настройки</h2>
 
-    <!-- Первый блок: Слои -->
+    <!-- Блок: Слои -->
     <div class="settings-block">
       <h3>Слои</h3>
       <div class="checkbox-group">
         <label><input type="checkbox" id="highlightObject" checked> Выделить объект</label>
-        <label><input type="checkbox" id="zones"> ЗОУИТЫ</label>
+        <label><input type="checkbox" id="structures"> Сооружения</label>
         <label><input type="checkbox" id="mapLayer"> Карта</label>
+
+        <!-- Ограничения -->
+        <div class="collapsible-wrapper">
+          <label class="collapsible-header">
+            ⚠️ Ограничения <span class="arrow">▾</span>
+          </label>
+          <div class="collapsible-content">
+            <label><input type="checkbox" id="energyTransport"> Объекты энергетики, связи, транспорта</label>
+            <label><input type="checkbox" id="culturalHeritage"> Объекты культурного наследия</label>
+            <label><input type="checkbox" id="natureAreas"> Природные территории</label>
+            <label><input type="checkbox" id="protectedObjects"> Охраняемые объекты</label>
+            <label><input type="checkbox" id="otherZones"> Иные зоны</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 <!-- Модальное окно -->
 <div id="jsonModal" class="modal">

@@ -56,6 +56,13 @@ fetchBtn.addEventListener("click", async () => {
   // =======================
   // 3. Основная логика: запрос данных и рендер
   // =======================
+  // === Лоадер внутри кнопки ===
+  const btnText = fetchBtn.querySelector(".btn-text");
+  const btnLoader = fetchBtn.querySelector(".btn-loader");
+  fetchBtn.classList.add("loading");
+  btnText.textContent = "";
+  btnLoader.style.display = "inline-block";
+
   try {
     // ---- 3.1 Получение данных кадастрового объекта ----
     const data = await Parse.fetchCadastralData(cadastralNumber);
@@ -95,5 +102,23 @@ fetchBtn.addEventListener("click", async () => {
     objectInfo.clear();
     wms.clear();
     console.error("Ошибка:", error);
+  } finally {
+    // === Возвращаем кнопку в нормальное состояние ===
+    fetchBtn.classList.remove("loading");
+    btnText.textContent = "Получить схему";
+    btnLoader.style.display = "none";
   }
+});
+
+// =======================
+// Обработчик списка ОГРАНИЧЕНИЙ
+// =======================
+document.querySelectorAll(".collapsible-header").forEach(header => {
+  header.addEventListener("click", () => {
+    const content = header.nextElementSibling;
+    const arrow = header.querySelector(".arrow");
+
+    content.classList.toggle("open");
+    arrow.textContent = content.classList.contains("open") ? "▴" : "▾";
+  });
 });

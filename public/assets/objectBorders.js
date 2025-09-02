@@ -65,7 +65,7 @@ export class ObjectBorders {
     ctx.globalAlpha = 1;
   }
 
-  fadeIn(duration = 500) {
+  fadeIn(duration = 200) {
     cancelAnimationFrame(this.animationFrame);
     const start = performance.now();
     const animate = (time) => {
@@ -77,7 +77,7 @@ export class ObjectBorders {
     requestAnimationFrame(animate);
   }
 
-  fadeOut(duration = 500) {
+  fadeOut(duration = 200) {
     cancelAnimationFrame(this.animationFrame);
     const start = performance.now();
     const animate = (time) => {

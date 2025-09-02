@@ -111,10 +111,40 @@ input[type="radio"] {
   border-radius: 8px;
   cursor: pointer;
   transition: .2s ease-in-out;
+  min-height: 2.5rem;
+  max-height: 2.5rem;
+  min-width: 15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .btn-fetch:hover {
   background-color: var(--accent-color-hover);
+}
+
+/* Лоадер внутри кнопки */
+.btn-loader {
+  border: 3px solid #fff;
+  border-top: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Состояние кнопки загрузки */
+.btn-fetch.loading {
+  opacity: 0.9;
+  pointer-events: none;
 }
 
 /* Настройки: блоки */
@@ -247,4 +277,42 @@ input[type="radio"] {
   --wms-fill-color: rgba(227, 135, 255, 0.445); /* полупрозрачная заливка */
 }
 
+
+/* Контейнер с ограничениями */
+.collapsible-wrapper {
+  margin-top: 0px;
+  display: block;
+}
+
+/* Заголовок (Ограничения) */
+.collapsible-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: normal;
+  padding: 3px 0;
+  user-select: none;
+}
+
+.collapsible-header:hover {
+  color: #007acc;
+  
+}
+
+/* Контент внутри */
+.collapsible-content {
+  margin-left: 0px;
+  margin-top: 5px;
+  display: none;
+}
+
+.collapsible-content.open {
+  display: block;
+}
+
+.collapsible-content label {
+  display: block;
+  margin-bottom: 4px;
+}
 
