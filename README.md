@@ -24,6 +24,3 @@
 
 ### Backend
 - Node.js  
-- [axios](https://www.npmjs.com/package/axios) — загрузка страниц  
-- [cheerio](https://www.npmjs.com/package/cheerio) — парсинг HTML  
-- (опционально) express — API для взаимодействия фронтенда и бэкенда  
